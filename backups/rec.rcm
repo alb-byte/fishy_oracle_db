@@ -1,0 +1,9 @@
+CONNECT TARGET fishy_admin/Root12345@//localhost:1521/fishy.be.by;
+RUN
+{
+RESTORE DATABASE;
+RECOVER DATABASE;
+ALTER DATABASE OPEN;
+}
+EXIT;
+

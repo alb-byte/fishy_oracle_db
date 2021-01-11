@@ -1,0 +1,62 @@
+SET serveroutput ON;
+--------------------------------------------------------------------------------
+SELECT * FROM STATE_INSPECTIONS;
+SELECT * FROM INSPECTIONS_VIEW;
+SELECT * FROM USER_PROCEDURES WHERE OBJECT_NAME LIKE '%INSPECTION%';
+DELETE USERS_VIEW;
+---------------------------------ADD--------------------------------------------
+DECLARE
+BEGIN
+  --ADD_INSPECTION('Hrodno','terwtt 54','+375291066654',5);
+  --ADD_INSPECTION('Minsk','ccdvdjd 8','+375291067774',5);
+  ADD_INSPECTION('Homel','wiwwb 0','+375291069854',5);
+  ADD_INSPECTION('Brest','323re f','+375291061154',5);
+EXCEPTION WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE(SQLERRM);
+END;
+SELECT * FROM INSPECTIONS_VIEW;
+----------------------------DELETE----------------------------------------------
+DECLARE
+BEGIN
+  --DELETE_INSPECTION_BY_ID(3);
+  DELETE_INSPECTION_BY_REGION('MInsk');
+EXCEPTION WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE(SQLERRM);
+END;
+
+SELECT * FROM INSPECTIONS_VIEW;
+--------------------------------UPDATE------------------------------------------
+DECLARE
+BEGIN
+  UPDATE_INSPECTION(1,NULL,'terts');
+  UPDATE_INSPECTION(4,'Ostrovec');
+EXCEPTION WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE(SQLERRM);
+END;
+
+SELECT * FROM INSPECTIONS_VIEW;
+-----------------------------------GET------------------------------------------
+SELECT * FROM INSPECTIONS_VIEW;
+DECLARE
+  CURSOR1 SYS_REFCURSOR;
+  
+  I INSPECTIONS_VIEW%ROWTYPE;
+BEGIN
+  --GET_INSPECTIONS(CURSOR1);
+  --GET_INSPECTION_BY_REGION(CURSOR1,'hrodno');
+  GET_INSPECTIONS_BY_ID(CURSOR1,4);
+  LOOP
+    FETCH CURSOR1 INTO I.INSPECTION_ID,I.INSPECTION_REGION,I.INSPECTION_ADDRESS,I.INSPECTION_PHONE;
+    EXIT WHEN CURSOR1%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE(
+    'ID: '      ||I.INSPECTION_ID      ||' '||
+    'REGION: '  ||I.INSPECTION_REGION  ||' '||
+    'ADDRESS: ' ||I.INSPECTION_ADDRESS ||' '||
+    'PHONE: '   ||I.INSPECTION_PHONE);
+  END LOOP;
+  CLOSE CURSOR1;
+EXCEPTION WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE(SQLERRM);
+    CLOSE CURSOR1;
+END;
+--------------------------------------------------------------------------------

@@ -1,0 +1,6 @@
+CONNECT TARGET fishy_admin/Root12345@//localhost:1521/fishy.be.by;
+RUN
+{
+BACKUP FULL DATABASE TAG "FULL_DATABASE_BACKUP_3" FORMAT 'L:\app\backup\rman_%U.bkp' PLUS ARCHIVELOG;
+}
+EXIT;
